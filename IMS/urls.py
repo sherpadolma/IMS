@@ -16,17 +16,40 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from base.views import ProductTypeViewSet, DepartmentApiView, ProductApiView, VendorApiView
+from base.views import ProductTypeViewSet, DepartmentApiView, ProductApiView, VendorApiView, UserApiView, SellApiView,PurchaseApiView, RatingApiView, GroupApiViwe
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("product/types/",ProductTypeViewSet.as_view({'get':'list','post':'create'})),
     path("product/types/<int:pk>/", ProductTypeViewSet.as_view({'get':'retrieve','put':'update','delete':'destroy'})),
+
     path("departments/",DepartmentApiView.as_view({'get':'list','post':'create'})),
     path("departments/<int:pk>/", DepartmentApiView.as_view({'get':'retrieve', 'patch' : 'partial_update', 'put':'update', 'delete':'destroy'})),
-    path('product/', ProductApiView.as_view({'get': 'list', 'post': 'create'})),
-    path('product/<int:pk>/', ProductApiView.as_view({'get': 'retrieve', 'put': 'update', 'delete': 'destroy', 'patch': 'partial_update'})),
-    path('vendor/', VendorApiView.as_view({'get': 'list', 'post': 'create'})),
-    path('vendor/<int:pk>/', VendorApiView.as_view({'get': 'retrieve', 'put': 'update', 'delete': 'destroy', 'patch': 'partial_update'})),
+
+    path("user/",UserApiView.as_view({'get':'list','post':'create'})),
+    path('register/', UserApiView.as_view({'post': 'register'})),
+    path('login/', UserApiView.as_view({'post': 'login'})),
+
+    path('groups/', GroupApiViwe.as_view({'get': 'list'})),
+
+    path('products/', ProductApiView.as_view({'get': 'list', 'post': 'create'})),
+    path('products/<int:pk>/', ProductApiView.as_view({'get': 'retrieve', 'put': 'update', 'delete': 'destroy', 'patch': 'partial_update'})),
+
+    path('purchases/', PurchaseApiView.as_view({'get': 'list', 'post': 'create'})),
+    path('purchases/<int:pk>/', PurchaseApiView.as_view({'get': 'retrieve', 'put': 'update', 'delete': 'destroy', 'patch': 'partial_update'})),
+    
+    path('most/purchased/products/', ProductApiView.as_view({'get':'most_purchased'})),
+
+    path('top/rated/products/', ProductApiView.as_view({'get':'top_rated'})),
+
+    path('product/ratings/', RatingApiView.as_view({'get': 'list', 'post': 'create'})),
+    path('product/ratings/<int:pk>/', RatingApiView.as_view({'get': 'retrieve', 'put': 'update', 'delete': 'destroy', 'patch': 'partial_update'})),
+   
+    path('vendors/', VendorApiView.as_view({'get': 'list', 'post': 'create'})),
+    path('vendors/<int:pk>/', VendorApiView.as_view({'get': 'retrieve', 'put': 'update', 'delete': 'destroy', 'patch': 'partial_update'})),
+    
+    path("sells/",SellApiView.as_view({'get':'list','post':'create'})),
+    path("sells/types/<int:pk>/", SellApiView.as_view({'get':'retrieve','put':'update','delete':'destroy'})),
+    path('best/selling/product/', ProductApiView.as_view({'get': 'best_selling'})),
 
 ]   

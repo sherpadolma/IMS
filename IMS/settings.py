@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'base',
     'rest_framework',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -122,3 +123,13 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+REST_FRAMEWORK = {
+    
+     'DEFAULT_PERMISSION_CLASSES' : [
+        "rest_framework.permissions.IsAuthenticated",  # Default permission class for all views 
+        ],
+    "DEFAULT_AUTHENTICATION_CLASSES" : [
+        'rest_framework.authentication.TokenAuthentication'
+        ]
+}

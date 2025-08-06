@@ -1,9 +1,6 @@
 from django.db import models
 
 # Create your models here.
-from django.db import models
-
-# Create your models here.
 class ProductType(models.Model):
     name = models.CharField(max_length=300)
 
@@ -23,9 +20,9 @@ class Vendor(models.Model):
     email = models.EmailField()
 
 class Purchase(models.Model):
-    product = models.ForeignKey(Product,on_delete=models.CASCADE)
+    product = models.ForeignKey(Product,on_delete=models.CASCADE,related_name='purchases')
     price = models.FloatField()
-    vendor = models.ForeignKey(Vendor,on_delete=models.CASCADE)
+    vendor = models.ForeignKey(Vendor,on_delete=models.CASCADE, null=True)
     quantity = models.IntegerField()
 
 class Customer(models.Model):
@@ -33,7 +30,12 @@ class Customer(models.Model):
     phone = models.CharField(max_length=20)
 
 class Sell(models.Model):
-    product = models.ForeignKey(Product,on_delete=models.CASCADE)
+    product = models.ForeignKey(Product,on_delete=models.CASCADE, related_name='sell')
     price = models.FloatField()
-    customer = models.ForeignKey(Customer,on_delete=models.CASCADE)
+    customer = models.ForeignKey(Customer,on_delete=models.CASCADE, null=True)
     quantity = models.IntegerField()
+
+class Rating(models.Model):
+    product = models.ForeignKey(Product,on_delete=models.CASCADE, related_name='ratings')
+    rating = models.IntegerField()
+    comment = models.TextField(null=True)
