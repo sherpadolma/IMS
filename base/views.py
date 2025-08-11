@@ -10,7 +10,6 @@ from django.contrib.auth import authenticate
 from rest_framework.authtoken.models import Token
 from django.db.models import Sum, Avg
 
-
 # Create your views here.
 # def home(request):
 #     return render(request, 'home.html')
@@ -182,7 +181,9 @@ class RatingApiView(ModelViewSet):
 class ProductApiView(GenericViewSet):
      queryset = Product.objects.all()
      serializer_class = ProductSerializer
-     permission_classes = [DjangoModelPermissions]  
+     permission_classes = [DjangoModelPermissions] 
+     filterset_fields = ['type', 'department'] 
+     search_fields = ['name', 'description']
      
 
      def best_selling(self,request):
@@ -202,6 +203,7 @@ class ProductApiView(GenericViewSet):
         
      def list(self,request):
         queryset = self.get_queryset()
+        filter_queryset = self.filter_queryset(queryset)
         Serializer = self.get_serializer(queryset,many=True)
         return Response(Serializer.data)
      
